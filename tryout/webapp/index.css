@@ -1,0 +1,73 @@
+body {
+	background-color: black;
+	font-family: Arial, sans-serif;
+  }
+  
+  .container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 48px;
+  }
+  
+  h1, p {
+	color: white;
+	text-align: center;
+	margin-bottom: 24px;
+  }
+
+  p {
+	  color: #ccc;
+  }
+  
+  #record-button {
+	background-color: #2CC700;
+	color: white;
+	border-radius: 50%; /* make the button round */
+	font-size: 16px;
+	cursor: pointer;
+	margin-top: 24px;
+	padding: 0; /* remove padding */
+	width: 72px; /* set a fixed width */
+	height: 72px; /* set a fixed height */
+	display: flex; /* set the button to flex container */
+	align-items: center; /* align the icon horizontally in the center */
+	justify-content: center; /* align the icon vertically in the center */
+	border: none;
+  }
+
+  #record-button:hover {
+	  background-color: rgb(10, 151, 73);
+  }
+  
+  /* Add a microphone icon inside the button */
+  #record-button:before {
+	width: 24px;
+	height: 24px;
+  }
+  
+  /* Add a ripple effect on click */
+  #record-button:active {
+	position: relative;
+  }
+  #record-button:active:before {
+	content: "";
+	background-color: rgba(228, 5, 5, 0.3); /* set the ripple color */
+	border-radius: 50%;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%); /* center the ripple */
+	width: 100%;
+	height: 100%;
+	opacity: 0;
+	transition: all 0.3s ease-in-out;
+  }
+  
+  #waveform {
+	width: 100%;
+	height: 200px;
+	background-color: black;
+	margin-top: 24px;
+	border: 2px solid black;
+  }
