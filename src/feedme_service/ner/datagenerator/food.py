@@ -58,11 +58,58 @@ class FoodTextGenerator:
     def concat_word(self):
         return random.choice(self.CONCAT_WORDS)
 
+    @classmethod
+    def float_to_text(cls, num: float):
+        if num == 0:
+            return "null"
+
+        units = ["", "ein", "zwei", "drei", "vier", "fünf", "sechs", "sieben", "acht", "neun"]
+        teens = ["zehn", "elf", "zwölf", "dreizehn", "vierzehn", "fünfzehn", "sechzehn", "siebzehn", "achtzehn", "neunzehn"]
+        tens = ["zwanzig", "dreißig", "vierzig", "fünfzig", "sechzig", "siebzig", "achtzig", "neunzig"]
+        scales = ["", "tausend", "million", "milliarde", "billion", "billiarde"]
+
+        result = []
+        if num < 0:
+            result.append("minus")
+            num = abs(num)
+
+        whole = int(num)
+        frac = int((num % 1) * 100 + 0.5)
+
+        if frac >= 100:
+            whole += 1
+            frac -= 100
+
+        scale_index = 0
+        while whole > 0:
+            chunk = whole % 1000
+            if chunk > 0:
+                if chunk >= 100:
+                    result.append(units[int(chunk / 100)])
+                    result.append("hundert")
+                if chunk % 100 < 20:
+                    result.append(teens[chunk % 100 - 10])
+                else:
+                    result.append(tens[int((chunk % 100) / 10) - 2])
+                    result.append(units[chunk % 10])
+                result.append(scales[scale_index])
+            whole = int(whole / 1000)
+            scale_index += 1
+
+        if frac > 0:
+            result.append("und")
+            if frac % 10 > 0:
+                result.append(units[frac % 10])
+            if frac // 10 > 0:
+                result.append(tens[frac // 10 - 2])
+
+        return " ".join(reversed(result))
+
     def create_random_product_entity(self):
         return {
             "P-LOC": random.choice(self.products),
             "M-LOC": random.choice(self.measures),
-            "A-LOC": str(random.choice([random.randint(0, 4), round(random.uniform(0.2, 10.5), 2)]))
+            "A-LOC": self.float_to_text(round(random.uniform(0.2, 1000.5), 2))
         }
 
     def sentence_blueprint(self):

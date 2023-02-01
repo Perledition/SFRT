@@ -6,6 +6,7 @@ import torch.nn as nn
 import torch.optim as optim
 from model.LSTM import LSTMTagger
 from utils import tag_to_ix, ix_to_tag, prepare_sequence
+from feedme_service.ner.datagenerator.food import FoodTextGenerator
 
 # ftg = FoodTextGenerator()
 # ftg.create(n=1000)
@@ -15,7 +16,7 @@ def train_ner():
         os.getcwd(),
         "datagenerator",
         "output",
-        "2023-01-07",
+        "2023-02-01",
         "train.csv"
     ), sep=";")
 
@@ -81,4 +82,3 @@ def train_ner():
         print(f'epoch {epoch}: loss: {loss}')
 
     torch.save(model.state_dict(), os.path.join(os.getcwd(), "model", "output", "lstm.pth"))
-

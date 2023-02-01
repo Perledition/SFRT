@@ -10,6 +10,7 @@ from fastapi import APIRouter, HTTPException, File, UploadFile, Request
 # import project related modules
 from feedme_service.settings import templates
 from feedme_service.ner.predict import predict
+from feedme_service.ner.utils import correct_spelling
 from feedme_service.service.models.extraction import SpeechExtraction
 from pydub import AudioSegment
 
@@ -34,12 +35,14 @@ def upload(request: Request, file: UploadFile = File(...)):
     se = SpeechExtraction()
     extract = se.extract(wav_path)
 
-    extract = predict(extract)
+    print("voice", extract)
+    print("corrected", correct_spelling(extract))
+    extract = predict(correct_spelling(extract))
 
     try:
         os.remove(wav_path)
     except Exception as e:
-        print(e)
+        print('remove wav', e)
         pass
 
     return {"extract": extract.to_html(index=False)}

@@ -13,7 +13,7 @@ def predict(sentence: str):
 
     try:
         with torch.no_grad():
-            inputs = prepare_sequence(sentence.replace("vier", "4").split(" "), word_to_ix)
+            inputs = prepare_sequence(sentence.split(" "), word_to_ix)
             tag_scores = ner_model.forward(inputs)
 
             # The sentence is "the dog ate the apple". i,j corresponds to score for tag j
