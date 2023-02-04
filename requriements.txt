@@ -13,3 +13,5 @@ pyspellchecker
 numexpr
 torch
 torchtext
+num2words
+zahlwort2num
